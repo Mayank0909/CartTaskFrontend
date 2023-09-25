@@ -81,11 +81,32 @@
 
 .cart-summary {
 	width: 35%;
-	padding: 20px 50px;
+	padding: 0px 30px;
 	box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
 }
+.couponList {
+	display: flex;
+	gap: 10px;
+	padding: 5px;
+	flex-direction: column;
+}
+/* .couponListBox {
+	border: 1px solid rgb(161, 155, 155);
+} */
+.couponListItem {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.couponName {
+	font-size: 13px;
+}
+.coupontext {
+	font-size: 12px;
+	color: gray;
+}
 
-.cart-summary div {
+.cart-summary > div {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -110,4 +131,16 @@
 .cart-summary .final-amount {
 	color: green;
 	font-weight: 800;
+}
+.applybutton {
+	width: fit-content !important;
+	padding: 5px 10px;
+	background-color: rgb(91, 91, 238);
+	color: #fff;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+}
+.applybutton:hover {
+	background-color: rgb(55, 32, 232);
 }

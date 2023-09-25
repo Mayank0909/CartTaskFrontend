@@ -9,7 +9,7 @@ import Header from "./Header";
 function App() {
 	return (
 		<>
-			<ToastContainer />
+			<ToastContainer autoClose={1000}></ToastContainer>
 			<Header />
 			<BrowserRouter>
 				<Routes>

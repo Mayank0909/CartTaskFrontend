@@ -9,7 +9,7 @@ const Products = () => {
 
 	const handleAddToBasket = async (id) => {
 		try {
-			await axios.post("/api/basket/add-item", {
+			await axios.post("http://localhost:8000/api/basket/add-item", {
 				productId: id,
 				quantity: 1,
 			});
@@ -21,7 +21,9 @@ const Products = () => {
 	};
 	const prod = async () => {
 		try {
-			const productsResponse = await axios.get("/api/products");
+			const productsResponse = await axios.get(
+				"http://localhost:8000/api/products"
+			);
 
 			console.log(productsResponse, "productsResponse");
 
