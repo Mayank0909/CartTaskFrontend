@@ -20,6 +20,19 @@ const CartPage = () => {
 			setCart(response?.data);
 		}
 	};
+	const handleAddToBasket = async (id, quantity) => {
+		// toast.success("Product added");
+		try {
+			await axios.post("http://localhost:8000/api/basket/add-item", {
+				productId: id,
+				quantity: quantity,
+			});
+			getCart();
+			console.log("product added");
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	const getDiscount = async () => {
 		const response = await axios.get("http://localhost:8000/api/discount");
 		setCouponsList(response?.data);
@@ -48,20 +61,37 @@ const CartPage = () => {
 					{cart?.data?.map((item, index) => (
 						<div className="product" key={item?.cartItem._id}>
 							<AiOutlineCloseCircle
-								onClick={() => removeItem(item?.cartItem.productId._id)}
+								onClick={() => removeItem(item?.cartItem?.productId?._id)}
 								className="removeButton"
 							/>
 							<div className="product-image">
-								<img src={item?.cartItem.productId.imgUrl} />
+								<img src={item?.cartItem?.productId?.imgUrl} />
 							</div>
 							<div className="product-information">
-								<h4>{item?.cartItem.productId.name}</h4>
+								<h4>{item?.cartItem?.productId?.name}</h4>
 								<h5 className="specification">
-									₹ {item?.cartItem.productId.price}
+									₹ {item?.cartItem?.productId?.price}
 								</h5>
-								<h5 className="specification">
-									Quantity: {item?.cartItem.quantity}
-								</h5>
+								<div className="changeQuantityBox">
+									{/* Quantity: {item?.cartItem?.quantity} */}
+									<button
+										className="applybutton"
+										onClick={() =>
+											handleAddToBasket(item?.cartItem?.productId, +1)
+										}
+									>
+										+
+									</button>
+									<span>{item?.cartItem?.quantity}</span>
+									<button
+										className="applybutton"
+										onClick={() =>
+											handleAddToBasket(item?.cartItem?.productId, -1)
+										}
+									>
+										-
+									</button>
+								</div>
 							</div>
 							<div className="product-information">
 								<h5>Total: ₹ {item?.totalItemPrice}</h5>
@@ -98,17 +128,22 @@ const CartPage = () => {
 						<span className="couponList couponListBox">
 							{couponsList.map((coupons, index) => {
 								return (
-									<div className="couponListItem">
+									<div key={coupons._id} className="couponListItem">
 										<span className="couponList">
 											<span className="couponName">Coupon {index + 1}</span>
 											<span className="coupontext">
-												Coupon's minimum cart value : {coupons.minCartValue}
+												Coupon's minimum cart value : {coupons?.minCartValue}
+											</span>
+											<span className="notapplicable">
+												{cart.totalPrice <= coupons?.minCartValue
+													? "Not Applicable"
+													: ""}
 											</span>
 										</span>
 										<button
 											className="applybutton"
-											onClick={() => getCart(coupons._id)}
-											disabled={cart.totalPrice <= coupons.minCartValue}
+											onClick={() => getCart(coupons?._id)}
+											disabled={cart.totalPrice <= coupons?.minCartValue}
 										>
 											Apply
 										</button>

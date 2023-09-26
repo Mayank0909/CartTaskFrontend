@@ -8,13 +8,14 @@ const Products = () => {
 	const [products, setProducts] = useState([]);
 
 	const handleAddToBasket = async (id) => {
+		toast.success("Product added");
+
 		try {
 			await axios.post("http://localhost:8000/api/basket/add-item", {
 				productId: id,
 				quantity: 1,
 			});
 			console.log("product added");
-			toast.success("Product added");
 		} catch (error) {
 			console.log(error);
 		}
